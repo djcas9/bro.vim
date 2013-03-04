@@ -46,30 +46,30 @@ module Example;
 # redefinitions of "capture_filters" are self-documenting and
 # go into the generated documentation's "Packet Filter" section
 redef capture_filters += {
-    ["ssl"] = "tcp port 443",
-    ["nntps"] = "tcp port 562",
+  ["ssl"] = "tcp port 443",
+  ["nntps"] = "tcp port 562",
 };
 
 global example_ports = {
-    443/tcp, 562/tcp,
+  443/tcp, 562/tcp,
 } &redef;
 
 # redefinitions of "dpd_config" are self-documenting and
 # go into the generated doc's "Port Analysis" section
 redef dpd_config += {
-    [ANALYZER_SSL] = [$ports = example_ports]
+  [ANALYZER_SSL] = [$ports = example_ports]
 };
 
 # redefinitions of "Notice::Type" are self-documenting, but
 # more information can be supplied in two different ways
 redef enum Notice::Type += {
-    ## any number of this type of comment
-    ## will document "Notice_One"
-    Notice_One,
-    Notice_Two,  ##< any number of this type of comment
-                 ##< will document "Notice_Two"
-    Notice_Three,
-    Notice_Four,
+  ## any number of this type of comment
+  ## will document "Notice_One"
+  Notice_One,
+  Notice_Two,  ##< any number of this type of comment
+               ##< will document "Notice_Two"
+  Notice_Three,
+  Notice_Four,
 };
 
 # Redef'ing the ID enumeration for logging streams is automatically tracked.
@@ -82,144 +82,143 @@ redef enum Log::ID += { LOG };
 # documentation's "public interface" section
 
 export {
+  # these headings don't mean anything special to the
+  # doc framework right now, I'm just including them
+  # to make it more clear to the reader how the doc
+  # framework will actually categorize a script's identifiers
 
-    # these headings don't mean anything special to the
-    # doc framework right now, I'm just including them
-    # to make it more clear to the reader how the doc
-    # framework will actually categorize a script's identifiers
+  ############## types ################
 
-    ############## types ################
+  # Note that I'm just mixing the "##" and "##<"
+  # types of comments in the following declarations
+  # as a demonstration.  Normally, it would be good style
+  # to pick one and be consistent.
 
-    # Note that I'm just mixing the "##" and "##<"
-    # types of comments in the following declarations
-    # as a demonstration.  Normally, it would be good style
-    # to pick one and be consistent.
+  ## documentation for "SimpleEnum"
+  ## goes here.
+  type SimpleEnum: enum {
+      ## and more specific info for "ONE"
+      ## can span multiple lines
+      ONE,
+      TWO,  ##< or more info like this for "TWO"
+            ##< can span multiple lines
+      THREE,
+  };
 
-    ## documentation for "SimpleEnum"
-    ## goes here.
-    type SimpleEnum: enum {
-        ## and more specific info for "ONE"
-        ## can span multiple lines
-        ONE,
-        TWO,  ##< or more info like this for "TWO"
-              ##< can span multiple lines
-        THREE,
-    };
+  ## document the "SimpleEnum" redef here
+  redef enum SimpleEnum  += {
+      FOUR, ##< and some documentation for "FOUR"
+      ## also "FIVE" for good measure
+      FIVE
+  };
 
-    ## document the "SimpleEnum" redef here
-    redef enum SimpleEnum  += {
-        FOUR, ##< and some documentation for "FOUR"
-        ## also "FIVE" for good measure
-        FIVE
-    };
+  ## general documentation for a type "SimpleRecord"
+  ## goes here.
+  type SimpleRecord: record {
+      ## counts something
+      field1: count;
+      field2: bool; ##< toggles something
+  };
 
-    ## general documentation for a type "SimpleRecord"
-    ## goes here.
-    type SimpleRecord: record {
-        ## counts something
-        field1: count;
-        field2: bool; ##< toggles something
-    };
+  ## document the record extension redef here
+  redef record SimpleRecord += {
+      ## document the extending field here
+      field_ext: string &optional; ##< (or here)
+  };
 
-    ## document the record extension redef here
-    redef record SimpleRecord += {
-        ## document the extending field here
-        field_ext: string &optional; ##< (or here)
-    };
+  ## general documentation for a type "ComplexRecord" goes here
+  type ComplexRecord: record {
+      field1: count;               ##< counts something
+      field2: bool;                ##< toggles something
+      field3: SimpleRecord;
+      msg: string &default="blah"; ##< attributes are self-documenting
+  } &redef;
 
-    ## general documentation for a type "ComplexRecord" goes here
-    type ComplexRecord: record {
-        field1: count;               ##< counts something
-        field2: bool;                ##< toggles something
-        field3: SimpleRecord;
-        msg: string &default="blah"; ##< attributes are self-documenting
-    } &redef;
+  ## An example record to be used with a logging stream.
+  type Info: record {
+      ts:       time       &log;
+      uid:      string     &log;
+      status:   count      &log &optional;
+  };
 
-    ## An example record to be used with a logging stream.
-    type Info: record {
-        ts:       time       &log;
-        uid:      string     &log;
-        status:   count      &log &optional;
-    };
+  ############## options ################
+  # right now, I'm just defining an option as
+  # any const with &redef (something that can
+  # change at parse time, but not at run time.
 
-    ############## options ################
-    # right now, I'm just defining an option as
-    # any const with &redef (something that can
-    # change at parse time, but not at run time.
+  ## add documentation for "an_option" here
+  const an_option: set[addr, addr, string] &redef;
 
-    ## add documentation for "an_option" here
-    const an_option: set[addr, addr, string] &redef;
+  # default initialization will be self-documenting
+  const option_with_init = 0.01 secs &redef; ##< More docs can be added here.
 
-    # default initialization will be self-documenting
-    const option_with_init = 0.01 secs &redef; ##< More docs can be added here.
+  ############## state variables ############
+  # right now, I'm defining this as any global
+  # that's not a function/event.  doesn't matter
+  # if &redef attribute is present
 
-    ############## state variables ############
-    # right now, I'm defining this as any global
-    # that's not a function/event.  doesn't matter
-    # if &redef attribute is present
+  ## put some documentation for "a_var" here
+  global a_var: bool;
 
-    ## put some documentation for "a_var" here
-    global a_var: bool;
+  # attributes are self-documenting
+  global var_with_attr: count &persistent;
 
-    # attributes are self-documenting
-    global var_with_attr: count &persistent;
+  # it's fine if the type is inferred, that information is self-documenting
+  global var_without_explicit_type = "this works";
 
-    # it's fine if the type is inferred, that information is self-documenting
-    global var_without_explicit_type = "this works";
+  ############## functions/events ############
 
-    ############## functions/events ############
+  ## Summarize purpose of "a_function" here.
+  ## Give more details about "a_function" here.
+  ## Separating the documentation of the params/return values with
+  ## empty comments is optional, but improves readability of script.
+  ##
+  ## tag: function arguments can be described
+  ##      like this
+  ## msg: another param
+  ##
+  ## Returns: describe the return type here
+  global a_function: function(tag: string, msg: string): string;
 
-    ## Summarize purpose of "a_function" here.
-    ## Give more details about "a_function" here.
-    ## Separating the documentation of the params/return values with
-    ## empty comments is optional, but improves readability of script.
-    ##
-    ## tag: function arguments can be described
-    ##      like this
-    ## msg: another param
-    ##
-    ## Returns: describe the return type here
-    global a_function: function(tag: string, msg: string): string;
+  ## Summarize "an_event" here.
+  ## Give more details about "an_event" here.
+  ## Example::an_event should not be confused as a parameter.
+  ## name: describe the argument here
+  global an_event: event(name: string);
 
-    ## Summarize "an_event" here.
-    ## Give more details about "an_event" here.
-	## Example::an_event should not be confused as a parameter.
-    ## name: describe the argument here
-    global an_event: event(name: string);
-
-    ## This is a declaration of an example event that can be used in
-    ## logging streams and is raised once for each log entry.
-    global log_example: event(rec: Info);
+  ## This is a declaration of an example event that can be used in
+  ## logging streams and is raised once for each log entry.
+  global log_example: event(rec: Info);
 }
 
-function filter_func(rec: Info): bool
-    {
-    return T;
-    }
+function filter_func(rec: Info): bool {
+  return T;
+}
 
 # this function is documented in the "private interface" section
 # of generated documentation and any "##"-stylized comments would also
 # be rendered there
-function function_without_proto(tag: string): string
-    {
-    return "blah";
-    }
+function function_without_proto(tag: string): string {
+  return "blah";
+}
 
 # this record type is documented in the "private interface" section
 # of generated documentation and any "##"-stylized comments would also
 # be rendered there
 type PrivateRecord: record {
-    field1: bool;
-    field2: count;
+  field1: bool;
+  field2: count;
 };
 
-event bro_init()
-    {
-    Log::create_stream(Example::LOG, [$columns=Info, $ev=log_example]);
-    Log::add_filter(Example::LOG, [
-        $name="example-filter",
-        $path="example-filter",
-        $pred=filter_func,
-        $exclude=set("ts")
-        ]);
-    }
+event bro_init() {
+  Log::create_stream(Example::LOG, [$columns=Info, $ev=log_example]);
+  Log::add_filter(Example::LOG, [
+      $name="example-filter",
+      $path="example-filter",
+      $pred=filter_func,
+      $exclude=set("ts")
+      ]);
+}
+
+
+" vim:set sw=2 sts=2 ts=8 noet:
