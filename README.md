@@ -14,9 +14,8 @@ bro.vim is a simple plugin for working with the bro scripting languages.
     cd ~/.local/src
     git clone git://github.com/mephux/bro.vim.git
     cp -R bro.vim/syntax/* ~/.vim/syntax/
-    cp -R bro.vim/indent/* ~/.vim/indent/
+    # cp -R bro.vim/indent/* ~/.vim/indent/ - Coming Soon.
     cp -R bro.vim/ftdetect/* ~/.vim/ftdetect/
-    cp -R bro.vim/ftplugin/* ~/.vim/ftplugin/
     vim bro.vim/example.bro
 
 ## Thanks
