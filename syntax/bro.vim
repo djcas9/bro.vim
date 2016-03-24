@@ -39,10 +39,17 @@ syn keyword broType          time vector
 
 syn match broLoad            "@load"
 syn match broLoad            "@load-sigs"
+syn match broLoad            "@load-plugin"
+syn match broLoad            "@unload"
+syn match broLoad            "@prefixes"
 
 syn match broPreCondit       "@if"
+syn match broPreCondit       "@ifdef"
+syn match broPreCondit       "@ifndef"
 syn match broPreCondit       "@else"
 syn match broPreCondit       "@endif"
+syn match broPreCondit       "@DIR"
+syn match broPreCondit       "@FILENAME"
 
 syn keyword broRepeat        for
 syn keyword broConditional   if else
