@@ -27,6 +27,8 @@ syn keyword broOperator      in "-" "+" "*" "/" "=="
 
 syn keyword broStatement     function nextgroup=broFunction skipwhite
 syn keyword broStatement     event nextgroup=broFunction skipwhite
+syn keyword broStatement     hook nextgroup=broFunction skipwhite
+syn keyword broStatement     module nextgroup=broFunction skipwhite
 syn match   broFunction      "[a-zA-Z_][a-zA-Z0-9_]*" contained
 
 syn keyword broType          addr any bool count 
