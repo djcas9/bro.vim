@@ -20,6 +20,7 @@ syn keyword broStatement     alarm using of add delete
 syn keyword broStatement     default export event
 syn keyword broStatement     print redef return schedule
 syn keyword broStatement     when timeout
+syn keyword broStatement     switch case as
 
 syn keyword broStorageClass  local const global
 
