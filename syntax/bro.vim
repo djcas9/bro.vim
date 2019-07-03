@@ -22,7 +22,7 @@ syn keyword broStatement     print redef return schedule
 syn keyword broStatement     when timeout
 syn keyword broStatement     switch case as
 
-syn keyword broStorageClass  local const global
+syn keyword broStorageClass  local const global option
 
 syn keyword broOperator      in "-" "+" "*" "/" "=="
 
