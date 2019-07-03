@@ -1,3 +1,3 @@
 if has("autocmd")
-  au  BufNewFile,BufRead *.bro set filetype=bro
+  au  BufNewFile,BufRead *.bro,*.zeek set filetype=bro
 endif
